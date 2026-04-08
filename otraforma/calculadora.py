@@ -27,7 +27,10 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("calculadora")
-                
+        
+        layout.setContentsMargins(0,0,0,0)
+        layout.setSpacing(20)
+        
         layout = QGridLayout()
         layout.addWidget(QPushButton("uno"), 0, 0)
         layout.addWidget(QPushButton("dos"), 0, 1)
