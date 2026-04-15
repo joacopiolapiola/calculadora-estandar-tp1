@@ -28,22 +28,27 @@ class MainWindow(QMainWindow):
         central_widget.setLayout(layout)
 
         botones = ["uno","dos","tres","cuatro","cinco","seis","siete","ocho","nueve","+","-","/","*","="]
-        
+        col=0
+        row=0    
         for b in botones:
-            var=0
-            if(botones.index(b) % 3 == 0 ):
-                var=var+1
-            b=layout.addWidget(QPushButton(b), botones.index(b),var)
+            if(col / 3 == 1):
+                row=row+1
 
+            if (col==3):
+                col=0
+
+            layout.addWidget(QPushButton(b), row, col)
+            col=col+1
+            
         
-        # uno=layout.addWidget(QPushButton("uno"), 0, 0)
+        # uno=layout.addWidget(QPushButton("uno", self), 0, 0)
         # dos=layout.addWidget(QPushButton("dos"), 0, 1)
         # tres=layout.addWidget(QPushButton("tres"), 0, 2)
         # cuatro=layout.addWidget(QPushButton("cuatro"), 1, 0)
         # cinco=layout.addWidget(QPushButton("cinco"), 1, 1)
         # seis=layout.addWidget(QPushButton("seis"), 1, 2)
         # siete=layout.addWidget(QPushButton("siete"), 2, 0)
-        # ocho=layout.addWidget(QPushButton("ocho"), 2, 1)
+        #  ocho=layout.addWidget(QPushButton("ocho"), 2, 1)
         # nueve=layout.addWidget(QPushButton("nueve"), 2, 2)
         # mas=layout.addWidget(QPushButton("+"), 0, 3)
         # menos=layout.addWidget(QPushButton("-"), 1, 3)
@@ -51,8 +56,8 @@ class MainWindow(QMainWindow):
         # dividir=layout.addWidget(QPushButton("/"), 3, 3)
         # igual=layout.addWidget(QPushButton("="), 3, 4)
 
-        #conectar numeros y pantalla
-        #uno.clicked.connect(lector=lector+"1")     
+        # #conectar numeros y pantalla
+        # uno.clicked.connect()     
 
 
 
