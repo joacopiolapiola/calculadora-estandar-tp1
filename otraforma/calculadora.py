@@ -1,65 +1,65 @@
-
-#hacer lector 
-
-#calcular
-
-#mas funciones
-
 import sys
 
-from PyQt6.QtCore import QSize, Qt
-from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton, QWidget, QGridLayout
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton, QWidget, QGridLayout, QVBoxLayout
 
-lector="0"
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("calculadora")
+        self.setWindowTitle("Calculadora")
 
         # widget central
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
 
+        # layout 
+        main_layout = QVBoxLayout()
+        central_widget.setLayout(main_layout)
 
+        #mostramos los digitos los resultados y eso en la pantalla
+        self.pantalla = QLabel("0")
+        main_layout.addWidget(self.pantalla)
 
-        # layout
-        layout = QGridLayout()
-        central_widget.setLayout(layout)
-
-        botones = ["uno","dos","tres","cuatro","cinco","seis","siete","ocho","nueve","+","-","/","*","="]
-        col=0
-        row=0    
-        for b in botones:
-            if(col / 3 == 1):
-                row=row+1
-
-            if (col==3):
-                col=0
-
-            layout.addWidget(QPushButton(b), row, col)
-            col=col+1
-            
         
-        # uno=layout.addWidget(QPushButton("uno", self), 0, 0)
-        # dos=layout.addWidget(QPushButton("dos"), 0, 1)
-        # tres=layout.addWidget(QPushButton("tres"), 0, 2)
-        # cuatro=layout.addWidget(QPushButton("cuatro"), 1, 0)
-        # cinco=layout.addWidget(QPushButton("cinco"), 1, 1)
-        # seis=layout.addWidget(QPushButton("seis"), 1, 2)
-        # siete=layout.addWidget(QPushButton("siete"), 2, 0)
-        #  ocho=layout.addWidget(QPushButton("ocho"), 2, 1)
-        # nueve=layout.addWidget(QPushButton("nueve"), 2, 2)
-        # mas=layout.addWidget(QPushButton("+"), 0, 3)
-        # menos=layout.addWidget(QPushButton("-"), 1, 3)
-        # multi=layout.addWidget(QPushButton("X"), 2, 3)
-        # dividir=layout.addWidget(QPushButton("/"), 3, 3)
-        # igual=layout.addWidget(QPushButton("="), 3, 4)
+        layout = QGridLayout()
+        main_layout.addLayout(layout)
 
-        # #conectar numeros y pantalla
-        # uno.clicked.connect()     
+        botones = ["1", "2", "3","4", "5", "6","7", "8", "9","0", "-", "*","/", "+", "="]
 
+        self.botones = {}
 
+        row = 0
+        col = 0
+
+        for b in botones:
+
+            boton = QPushButton(b)
+            layout.addWidget(boton, row, col)
+            self.botones[b] = boton
+
+            # nunca me dijieron que checked existe mal ahi
+            boton.clicked.connect(lambda checked, t=b: self.presionado(t))
+
+            col += 1
+            if col == 3:
+                col = 0
+                row += 1
+
+        self.expresion = "" #despues de presionar un boton se reinicia
+
+    def presionado(self, b):
+        if b == "=":
+            try:
+                resultado = str(eval(self.expresion))
+                self.pantalla.setText(resultado)
+                self.expresion = resultado
+            except:
+                self.pantalla.setText("Error")
+                self.expresion = ""
+        else:
+            self.expresion += b
+            self.pantalla.setText(self.expresion)
 
 
 app = QApplication(sys.argv)
